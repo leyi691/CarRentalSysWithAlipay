@@ -1,0 +1,176 @@
+
+
+
+<!-- 自动弹出modal框  -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 新 Bootstrap5 核心 CSS 文件 -->
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!-- Icon CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<!-- 新 Bootstrap5 核心 JS 文件 -->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <title>普通管理员-出库登记</title>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdropEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabelEdit">修改车辆信息</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form class="form-control" action="<%=basePath%>/doCarStore?op=carManage&do=edit" method="POST" enctype="multipart/form-data">
+                  <div class="container">
+                      <div class="row">
+                          <input type="hidden" name="carStoreId" value="">
+                          <div class="col-6">
+                              <label for="carPictureEdit"><i>*</i>车辆照片</label>
+                              <input type="file" class="form-control"
+                                     id="carPictureEdit" name="carPicture" required
+                                     value="">
+                          </div>
+
+                          <div class="col-6">
+                              <label for="licensePlateNumberEdit"><i>*</i>车牌号</label>
+                              <input type="text" class="form-control"
+                                     id="licensePlateNumberEdit" name="licensePlateNumber" required
+                                     value="<%=carEdit.getLicensePlateNumber()%>">
+                          </div>
+
+                          <div class="col-6">
+                              <label for="brandEdit"><i>*</i>品牌</label>
+                              <input type="text" class="form-control"
+                                     id="brandEdit" name="brand" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="brandNumberEdit"><i>*</i>型号</label>
+                              <input type="text" class="form-control"
+                                     id="brandNumberEdit" name="brandNumber" required>
+                          </div>
+
+
+
+
+                          <div class="col-6">
+                              <label for="rentalPriceEdit"><i>*</i>租赁价格</label>
+                              <input type="text" class="form-control"
+                                     id="rentalPriceEdit" name="rentalPrice" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="displacementEdit"><i>*</i>排量</label>
+                              <input type="text" class="form-control"
+                                     id="displacementEdit" name="displacement" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="carsEdit"><i>*</i>厢数</label>
+                              <input type="text" class="form-control"
+                                     id="carsEdit" name="cars" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="seatsEdit"><i>*</i>座数</label>
+                              <input type="text" class="form-control"
+                                     id="seatsEdit" name="seats" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="engineNumberEdit"><i>*</i>发动机号</label>
+                              <input type="text" class="form-control"
+                                     id="engineNumberEdit" name="engineNumber" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="frameNumberEdit"><i>*</i>车架号</label>
+                              <input type="text" class="form-control"
+                                     id="frameNumberEdit" name="frameNumber" required>
+                          </div>
+
+                          <div class="col-6">
+                              <label for="purchaseDateEdit"><i>*</i>购入日期</label>
+                              <input type="date" class="form-control"
+                                     id="purchaseDateEdit" name="purchaseDate" required>
+                          </div>
+
+                          <div class="col-6 mt-3">
+                              <p class="d-inline"><i>*</i>车辆状态：</p>
+                              <input class="form-check-input" type="radio" name="status" id="availableEdit" value="在店内" required>
+                              <label class="form-check-label" for="availableEdit">
+                                  在店内
+                              </label>
+                              <input class="form-check-input" type="radio" name="status" id="rentedEdit" value="已租出">
+                              <label class="form-check-label" for="rentedEdit">
+                                  已租出
+                              </label>
+                              <input class="form-check-input" type="radio" name="status" id="maintainEdit" value="维修中">
+                              <label class="form-check-label" for="maintainEdit">
+                                  维修中
+                              </label>
+                              <!-- <input class="form-check-input" type="radio" name="status" id="maintain"> -->
+                              <!-- <label class="form-check-label text-danger" for="maintain">
+                              报废
+                              </label> -->
+                              <br>
+                              <p class="d-inline"><i>*</i>汽车类型：</p>
+                              <input class="form-check-input" type="radio" name="carType" id="offRoadEdit" value="越野车" required>
+                              <label class="form-check-label" for="offRoadEdit">
+                                  越野车
+                              </label>
+                              <input class="form-check-input" type="radio" name="carType" value="小轿车" id="normalCarEdit">
+                              <label class="form-check-label" for="normalCarEdit">
+                                  小轿车
+                              </label>
+                              <input class="form-check-input" type="radio" name="carType" value="跑车" id="sportCarEdit">
+                              <label class="form-check-label" for="sportCarEdit">
+                                  跑车
+                              </label>
+                              <input class="form-check-input" type="radio" name="carType" value="超级跑车" id="superCarEdit">
+                              <label class="form-check-label" for="superCarEdit">
+                                  超级跑车
+                              </label>
+                              <!-- <input class="form-check-input" type="radio" name="status" id="maintain"> -->
+                              <!-- <label class="form-check-label text-danger" for="maintain">
+                              报废
+                              </label> -->
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                      <button type="submit" class="btn btn-success">提交</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <script>
+        // 自动弹出modal框
+        var myModal = new bootstrap.Modal(document.getElementById('staticBackdropEdit'), {
+            keyboard: true
+        })
+        myModal.show()
+    </script>
+
+</body>
+</html>

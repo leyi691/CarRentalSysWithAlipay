@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nbut.jerry.mapper.CarSqlMapper">
+    <select id="selectAll" resultType="Car">
+    select * from carTable order by carId desc
+    </select>
+    <select id="selectAllCarRand" resultType="Car">
+    select * from carTable order by rand()
+    </select>
+    <select id="selectAllCarAvailableRand" resultType="Car">
+    select * from carTable c, carStoreTable s where c.carStatus='在店内' and s.storeId = c.storeId and s.storeStatus='开业中' order by rand()
+    </select>
+<!--    查询SUV类型的车辆 随机排序-->
+    <select id="selectCarByCarTypeAvailableRand" parameterType="string" resultType="Car">
+    select * from carTable c, carStoreTable s where c.carType=#{_parameter} and c.carStatus='在店内' and s.storeId = c.storeId and s.storeStatus='开业中' order by rand()
+    </select>
+    <select id="selectAllByStoreId" parameterType="int" resultType="Car">
+    select * from carTable where storeId=#{_parameter} order by carId desc
+    </select>
+    <select id="selectCarById" parameterType="int" resultType="Car">
+    select * from carTable where carId=#{_parameter}
+    </select>
+    <select id="selectCarByName" parameterType="string" resultType="Car">
+        SELECT * FROM carTable where carName=#{_parameter}
+    </select>
+    <select id="selectAllByCarTypeAvailable" parameterType="string" resultType="Car">
+        SELECT * FROM carTable where carType=#{_parameter}
+    </select>
+<!--    按汽车品牌搜索     -->
+    <select id="searchCarLikeBrand" parameterType="string" resultType="Car">
+        SELECT * FROM carTable WHERE brand LIKE #{searchTxt} ORDER BY carId DESC
+    </select>
+    <!--    按汽车品牌搜索(仅商户)     -->
+    <select id="searchCarLikeBrandByStoreId" parameterType="Map" resultType="Car">
+        SELECT * FROM carTable WHERE brand LIKE #{searchTxt} AND storeId=#{storeId} ORDER BY carId DESC
+    </select>
+    <insert id="insertCarById" parameterType="Car">
+    INSERT into carTable(storeId,carPicture,licensePlateNumber,brand,brandNumber,carType,rentalPrice,displacement,cars,seats,engineNumber,frameNumber,purchaseDate,carStatus)
+    values(#{storeId},#{carPicture},#{licensePlateNumber},#{brand},#{brandNumber},#{carType},#{rentalPrice},#{displacement},#{cars},#{seats},#{engineNumber},#{frameNumber},#{purchaseDate},#{carStatus})
+    </insert>
+    <update id="updateCarById" parameterType="Car">
+    UPDATE carTable set carPicture=#{carPicture},
+    licensePlateNumber=#{licensePlateNumber}, brand=#{brand}, brandNumber=#{brandNumber},
+    carType=#{carType},rentalPrice=#{rentalPrice},
+    displacement=#{displacement},cars=#{cars},seats=#{seats},
+    engineNumber=#{engineNumber},frameNumber=#{frameNumber},
+    purchaseDate=#{purchaseDate},carStatus=#{carStatus}
+    where carId=#{carId}
+    </update>
+    <update id="updateCarStatusById" parameterType="Car">
+    UPDATE carTable SET carStatus=#{carStatus} WHERE carId=#{carId}
+    </update>
+    <delete id="deleteCarById" parameterType="int">
+    DELETE from carTable where carId=#{_parameter} AND carStatus !='租赁中'
+    </delete>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nbut.jerry.mapper.UserSqlMapper">
+    <select id="selectAll" resultType="User">
+    select * from userTable order by userId desc
+    </select>
+    <select id="selectUserById" parameterType="int" resultType="User">
+    select * from userTable where userId=#{_parameter}
+    </select>
+    <select id="selectUserByName" parameterType="string" resultType="User">
+        SELECT * FROM userTable where username=#{_parameter}
+    </select>
+    <select id="selectUserByUserNameForCheck" parameterType="User" resultType="int">
+        SELECT COUNT(*) FROM userTable where username=#{username} AND password=#{password}
+    </select>
+    <select id="searchUserLikeNicknameForSysAdmin" parameterType="string" resultType="User">
+        SELECT * FROM userTable WHERE nickname LIKE #{_parameter}
+    </select>
+    <insert id="insertUserById" parameterType="User">
+    insert into userTable(username,password,nickname,sex,portrait,registerDate,phoneNumber,idType,idNumber,province,city,area,address)values(#{username},#{password},#{nickname},#{sex},#{portrait},#{registerDate},#{phoneNumber},#{idType},#{idNumber},#{province},#{city},#{area},#{address})
+    </insert>
+    <update id="updateUserById" parameterType="User">
+    update userTable set password=#{password},
+    nickname=#{nickname},sex=#{sex},portrait=#{portrait},
+    phoneNumber=#{phoneNumber},idType=#{idType},
+    idNumber=#{idNumber}, province=#{province},
+    city=#{city},area=#{area},address=#{address} where userId = #{userId}
+    </update>
+    <update id="updateUserByUsername" parameterType="User">
+    update userTable set password=#{password},
+    nickname=#{nickname},sex=#{sex},portrait=#{portrait},
+    phoneNumber=#{phoneNumber},idType=#{idType},
+    idNumber=#{idNumber}, province=#{province},
+    city=#{city},area=#{area},address=#{address} where username = #{username}
+    </update>
+    <update id="updateUserByUsernameWithoutPassword" parameterType="User">
+    update userTable set
+    nickname=#{nickname},sex=#{sex},portrait=#{portrait},
+    phoneNumber=#{phoneNumber},idType=#{idType},
+    idNumber=#{idNumber}, province=#{province},
+    city=#{city},area=#{area},address=#{address} where username = #{username}
+    </update>
+    <delete id="deleteUserById" parameterType="int">
+    DELETE from userTable where userId=#{_parameter}
+    </delete>
+</mapper>

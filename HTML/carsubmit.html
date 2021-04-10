@@ -1,0 +1,258 @@
+
+
+
+<!-- 自动弹出modal框  -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- 新 Bootstrap5 核心 CSS 文件 -->
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!-- Icon CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<!-- 新 Bootstrap5 核心 JS 文件 -->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <title>普通管理员-出库登记</title>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdropEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="staticBackdropLabelEdit">最后一步！</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-control" action="<%=basePath%>/doCarStore?op=carManage&do=edit" method="POST" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="row">
+                            <!--  1. 订车门店、还车门店
+                                  2. 取车日期、还车日期
+                                  3. 订单金额，提交给支付宝接口进行支付
+                                  4. 修改汽车状态
+                              -->
+                            <input type="hidden" name="carStoreId" value="">
+  
+                            <div class="col-12 mb-3 row">
+                              <h4 class="form-label my-3">快速设置</h4>
+  
+  
+                              <div class="col-6">
+                                  <label for="brandEdit">取车日期：</label>
+                                  <div class="btn-group mt-0" role="group">
+                                      <button class="btn btn-outline-secondary" type="button" 
+                                      onclick="setDate('getCarDate', 1)">明天</button>
+                                      <button class="btn btn-outline-secondary" type="button" 
+                                      onclick="setDate('getCarDate', 3)">后天</button>
+                                      <button class="btn btn-outline-secondary" type="button" 
+                                      onclick="setDate('getCarDate', 8)">7天后</button>
+                                      <button class="btn btn-outline-secondary" type="button" 
+                                      onclick="setDate('getCarDate', 31)">30天后</button>
+                                    </div>
+                                    <input type="text" class="ms-2 form-control w-25 d-inline" 
+                                    placeholder="自定义取车日期" onchange="setDate('getCarDate', this.value)">
+                              </div>
+  
+  
+                              <div class="col-6">
+                                  <label class="form-label">用车时长：</label>
+                                  <div class="btn-group" role="group">
+                                          <button class="btn btn-outline-secondary" type="button" 
+                                          onclick="setDate('returnCarDate', 2);setDate('getCarDate', 1)">1天</button>
+                                          <button class="btn btn-outline-secondary" type="button" 
+                                          onclick="setDate('returnCarDate', 4);setDate('getCarDate', 1)">3天</button>
+                                          <button class="btn btn-outline-secondary" type="button" 
+                                          onclick="setDate('returnCarDate', 8);setDate('getCarDate', 1)">7天</button>
+                                          <button class="btn btn-outline-secondary" type="button" 
+                                          onclick="setDate('returnCarDate', 31);setDate('getCarDate', 1)">30天</button>
+                                          <input type="text" class="ms-2 form-control w-25 d-inline" 
+                                          placeholder="自定义天数" 
+                                          onchange="setDate('returnCarDate', parseInt(this.value)+parseInt(1));setDate('getCarDate', 1)">
+                                </div>
+                              </div>
+                              
+                            </div>
+  
+                            <div class="col-6">
+                                <label class="" for="brandEdit">取车日期</label>
+                                <input type="date" class="form-control d-inline w-50"
+                                       id="getCarDate" name="brand" required>
+                            </div>
+  
+                            <div class="col-6">
+                                <label for="brandNumberEdit">还车日期：</label>
+                                <input type="date" class="form-control d-inline w-50"
+                                       id="returnCarDate" name="brandNumber" required
+                                       onchange="countDays()">
+                            </div>
+  
+  
+  
+  
+                            <div class="col-6 my-3">
+                              <p class="d-inline me-4">车辆租赁价格:</p>
+                              <p id="price" class="d-inline text-danger">200</p>
+                              <p class="d-inline">元 / 天</p>
+                              <p id="" class="d-inline ms-5 me-2">
+                                  您租赁的时长为：
+                              </p>
+                              <p id="rentalDays" class="d-inline text-danger"></p>
+                              <p class="d-inline">天</p>
+                            </div>
+  
+                            <!-- <div class="col-6">
+                                <label for="displacementEdit"><i>*</i>排量</label>
+                                <input type="text" class="form-control"
+                                       id="displacementEdit" name="displacement" required>
+                            </div> -->
+                            <!-- 显示租赁总金额 -->
+                            <div class="col-6 my-3">
+                              <p class="d-inline">总金额：</p>
+                              <p id="totalAmount" class="d-inline text-danger"></p>
+                              <p class="d-inline">元</p>
+                          </div>
+                            <!-- 显示租赁总金额 -->
+                            <div class="col-6 my-3">
+                              <p class="d-inline">取车日期：</p>
+                              <p id="showGetCarDate" class="d-inline text-danger"></p>
+                              <p class="d-inline"></p>
+                          </div>
+                          <div class="col-6 my-3">
+                              <p class="d-inline">还车日期：</p>
+                              <p id="showReturnCarDate" class="d-inline text-danger"></p>
+                              <p class="d-inline"></p>
+                          </div>
+                            <!-- 显示租赁总金额 -->
+                            <div class="col-6 my-3">
+                              <p class="d-inline">取车门店：</p>
+                              <p id="getCarStore" class="d-inline text-danger"></p>
+                              <p class="d-inline"></p>
+                          </div>
+                          <div class="col-6 my-3">
+                              <p class="d-inline">还车门店：</p>
+                              <p id="returnCarStore" class="d-inline text-danger"></p>
+                              <p class="d-inline"></p>
+                          </div>
+  
+                        </div>
+                    </div>
+  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">取消</button>
+                        <button id="submitBtn" type="submit" class="btn btn-success">立刻去付钱</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <script>
+        // 自动弹出modal框
+        var myModal = new bootstrap.Modal(document.getElementById('staticBackdropEdit'), {
+            keyboard: true
+        });
+        myModal.show();
+        // TODO 进行计算
+
+        /**
+         * 计算用户选择了几天，并以此计算总金额
+         */ 
+        function countDays(){
+            let p = document.getElementById("rentalDays");
+            let startDay = document.getElementById("getCarDate").value;
+            let endDay = document.getElementById("returnCarDate").value;
+            let days = getNumberOfDays(startDay, endDay);
+            p.innerText = days;
+            let totalAmount = document.getElementById("totalAmount");
+            let price = document.getElementById("price").innerText;
+            totalAmount.innerText=days*price;
+            // 还车日期不能早于取车日期
+            if (days<0) {
+                startDay=endDay=totalAmount=price='还车日期不能早于取车日期';
+                // 禁用提交按钮
+                document.getElementById("submitBtn").disabled="disabled"
+            } 
+            else if (days>=0){
+                document.getElementById("submitBtn").disabled=""
+            }
+            if (startDay-getDay(0)===0){
+                startDay=endDay=totalAmount=price='取车日期不能是今天';
+                // 禁用提交按钮
+                document.getElementById("submitBtn").disabled="disabled"
+            }
+            else{
+                document.getElementById("submitBtn").disabled=""
+            }
+            if (startDay-getDay(0)<0){
+                startDay=endDay=totalAmount=price='取车日期不能早于今天';
+                // 禁用提交按钮
+                document.getElementById("submitBtn").disabled="disabled"
+            } else{
+                document.getElementById("submitBtn").disabled=""
+            }
+            document.getElementById("showGetCarDate").innerText=startDay;
+            document.getElementById("showReturnCarDate").innerText=endDay;
+        };
+        /**
+         * elementId指的是修改的input标签ID
+         * days指offset的天数
+         */ 
+        function setDate(elementId, days){
+            document.getElementById(elementId).value=getDay(days);
+            countDays();
+        }
+
+        /**
+         * 日期相减得到天数 endDate - startDate
+         */ 
+        function getNumberOfDays(startDate, endDate){
+            // startDate:   开始日期
+            // endDate:     结束日期
+            var startDay =  Date.parse(new Date(startDate));
+            var endDay   =  Date.parse(new Date(endDate));
+            var day      =  parseInt((endDay-startDay) / (1000 * 60 * 60 * 24));
+            return day
+        };
+
+        /**
+         * 根据当天获取某一天
+         * getDay(0) 当天
+         * getDay(7) 7天后
+         * getDay(-7) 7天前
+         * 输出格式： 2020-01-01
+         */
+        function getDay(day){
+            function doHandleMonth(month){
+    　　        var m = month;
+    　　        if(month.toString().length == 1){
+    　　　　        m = "0" + month;
+    　　        }
+    　　        return m;
+            };
+            var today = new Date();
+            var targetday_milliseconds=today.getTime() + 1000*60*60*24*day;
+            today.setTime(targetday_milliseconds); //注意，这行是关键代码
+            var tYear = today.getFullYear();
+            var tMonth = today.getMonth();
+            var tDate = today.getDate();
+            tMonth = doHandleMonth(tMonth + 1);
+            tDate = doHandleMonth(tDate);
+            return tYear+"-"+tMonth+"-"+tDate;
+        };
+    </script>
+
+</body>
+</html>

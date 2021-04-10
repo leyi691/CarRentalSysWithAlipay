@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore/carStoreCarManage.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore/carStoreDispatch.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore/carStoreIndex.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsps/carStore" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsps/sysAdmin/sysAdminManageCarStore.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsps/sysAdmin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsps/user/userOrder.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsps/user" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/sign/sign-in.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/sign/sign-up.jsp" value="file://$PROJECT_DIR$/src/main/webapp/sign" />
+      </map>
+    </option>
+  </component>
+</project>

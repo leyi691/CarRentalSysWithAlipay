@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人信息页面">
+    <meta name="author" content="励佳余">
+    <title>个人信息</title>
+
+<!-- 新 Bootstrap5 核心 CSS 文件 -->
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!-- Icon CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<!-- 新 Bootstrap5 核心 JS 文件 -->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script src="/js/area.min.js"></script>
+<script type="text/javascript">
+var flag = false;
+  function doEdit(){
+    flag = true;
+    document.getElementById("inputPassword")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputNickname")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexNone")       .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexMan")        .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexWoman")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputPhoneNumber")   .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputIdType")        .disabled="";       // 将input标签的disabled属性去除
+    // document.getElementsByName("Province")        .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputIDNumber")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputAddress")       .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("formFile")           .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("btn-submitEdit")     .hidden="";         // 将修改按钮的hidden属性去除
+  }
+</script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .bg-img{
+        /* 加载背景图 */
+        background-image: url(images/background-photo.jpg);
+
+        /* 背景图垂直、水平均居中 */
+        background-position: center center;
+
+        /* 背景图不平铺 */
+        background-repeat: no-repeat;
+
+        /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+        /* background-attachment: fixed; */
+
+        /* 让背景图基于容器大小伸缩 */
+        background-size: cover;
+
+        /* 设置背景颜色，背景图加载过程中会显示背景色 */
+        background-color: #464646;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="./css/userIndex.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</header>
+
+    <main>
+      <!-- Page Content -->
+      <div class="container">
+          <div class="row">
+              <div class="col-2 offset-1">
+                  <!--       显示有的几种车辆类型  TODO a标签链接实现       -->
+                  <div class="list-group">
+                      <a id="allCar" href="<%=basePath%>" class="list-group-item text-dark">所有车辆</a>
+                      <a id="SUV" class="list-group-item text-dark">越野车</a>
+                      <a id="car" class="list-group-item text-dark">小轿车</a>
+                      <a id="sportCar" class="list-group-item text-dark">跑车</a>
+                      <a id="superCar" class="list-group-item text-dark">超级跑车</a>
+                  </div>
+                  <script type="text/javascript">
+                      carTypeInit('<%=request.getAttribute("carType")%>')
+                  </script>
+              </div>
+  
+              <!-- /.col-lg-3 -->
+  
+              <div class="col-8">
+  
+                  <div class="table-responsive">
+                      <table class="table align-middle">
+                          <thead>
+                          <tr>
+                              <th scope="col" class="display-6">匹配车型</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                              <th scope="row">
+                                <img class="card-img-top img-fluid" src="img/Lamborghini-Centenario-Coupe-supercar-front-view_3840x2160.jpeg" alt="汽车图片"
+                                style="width: 12vw; height: 7vw;">
+                              </th>
+                              <td><h4><span class="text-dark">兰博基尼 LP770</span></h4><br>
+                              自动 1.6T
+                              <br>
+                              </td>
+                              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                              <td></td>
+                              <td>¥<span class="text-danger display-6">1999</span> 元/天</td>
+                              <td><input type="submit" class="btn btn-primary" value="立即预订"></input></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+  
+  
+              </div>
+  
+              <!-- /.col-lg-9 -->
+  
+          </div>
+  
+      </div>
+      <!-- /.container -->
+  
+  
+  </main>
+  </div>
+</div>
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+      <!-- <script src="./js/userIndex.js"></script> -->
+      <!-- 三级联动 begin -->
+    <script type="text/javascript" src="/js/address.js"></script>
+    <script >
+
+        $(function () {
+            var html = "";
+            $("#input_city").append(html);
+            $("#input_area").append(html);
+            $.each(pdata,function(idx,item){
+                if (parseInt(item.level) == 0) {
+                    html += "<option value="+item.code+" >"+ item.names +"</option> ";
+                }
+            });
+            $("#input_province").append(html);
+
+            $("#input_province").change(function(){
+                if ($(this).val() == "") return;
+                $("#input_city option").remove();
+                $("#input_area option").remove();
+                //var code = $(this).find("option:selected").attr("exid");
+                var code = $(this).find("option:selected").val();
+                code = code.substring(0,2);
+                var html = "<option value=''>--请选择--</option>";
+                $("#input_area option").append(html);
+                $.each(pdata,function(idx,item){
+                    if (parseInt(item.level) == 1 && code == item.code.substring(0,2)) {
+                        html +="<option value="+item.code+" >"+ item.names +"</option> ";
+                    }
+                });
+                $("#input_city ").append(html);
+            });
+
+            $("#input_city").change(function(){
+                if ($(this).val() == "") return;
+                $("#input_area option").remove();
+                var code = $(this).find("option:selected").val();
+                code = code.substring(0,4);
+                var html = "<option value=''>--请选择--</option>";
+                $.each(pdata,function(idx,item){
+                    if (parseInt(item.level) == 2 && code == item.code.substring(0,4)) {
+                        html +="<option value="+item.code+" >"+ item.names +"</option> ";
+                    }
+                });
+                $("#input_area ").append(html);
+            });
+        });
+    </script>
+    <!-- 三级联动 end -->
+  </body>
+</html>

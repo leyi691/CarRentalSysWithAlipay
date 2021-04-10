@@ -1,0 +1,28 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/HTML/js/area.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/adminHelp.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/area.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/carHelp.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/carStoreHelp.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/form-validation.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/userHelp.min.js" />
+        <item url="file://$PROJECT_DIR$/src/main/webapp/js/utils.min.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/HTML/js/area.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/adminHelp.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/area.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/carHelp.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/carStoreHelp.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/form-validation.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/userHelp.min.js" />
+      <root url="file://$PROJECT_DIR$/src/main/webapp/js/utils.min.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人信息页面">
+    <meta name="author" content="励佳余">
+    <title>个人信息</title>
+
+<!-- 新 Bootstrap5 核心 CSS 文件 -->
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!-- Icon CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<!-- 新 Bootstrap5 核心 JS 文件 -->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script src="/js/area.min.js"></script>
+<script type="text/javascript">
+var flag = false;
+  function doEdit(){
+    flag = true;
+    document.getElementById("inputPassword")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputNickname")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexNone")       .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexMan")        .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputSexWoman")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputPhoneNumber")   .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputIdType")        .disabled="";       // 将input标签的disabled属性去除
+    // document.getElementsByName("Province")        .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputIDNumber")      .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("inputAddress")       .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("formFile")           .disabled="";       // 将input标签的disabled属性去除
+    document.getElementById("btn-submitEdit")     .hidden="";         // 将修改按钮的hidden属性去除
+  }
+</script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .bg-img{
+        /* 加载背景图 */
+        background-image: url(images/background-photo.jpg);
+
+        /* 背景图垂直、水平均居中 */
+        background-position: center center;
+
+        /* 背景图不平铺 */
+        background-repeat: no-repeat;
+
+        /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+        /* background-attachment: fixed; */
+
+        /* 让背景图基于容器大小伸缩 */
+        background-size: cover;
+
+        /* 设置背景颜色，背景图加载过程中会显示背景色 */
+        background-color: #464646;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="./css/userIndex.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <span data-feather="home"></span>
+              店铺信息主页
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              订单
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="shopping-cart"></span>
+              Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              Customers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="bar-chart-2"></span>
+              Reports
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="layers"></span>
+              Integrations
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Saved reports</span>
+          <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Current month
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Last quarter
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Social engagement
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Year-end sale
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h3">车辆信息</h1>
+            <div class="btn-group me-3">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Launch static backdrop modal
+            </button>
+          </div>
+        </div>
+  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">照片</th>
+              <th scope="col">车牌号</th>
+              <th scope="col">品牌</th>
+              <th scope="col">型号</th>
+              <th scope="col">汽车类型</th>
+              <th scope="col">租赁价格</th>
+              <th scope="col">排量</th>
+              <th scope="col">厢数</th>
+              <th scope="col">座数</th>
+              <th scope="col">发动机号</th>
+              <th scope="col">车架号</th>
+              <th scope="col">购入日期</th>
+              <th scope="col">状态</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" style="width: 6vw;">
+                  <img src="2.jpeg" style="width: 6vw; height: 6vw; object-fit: cover;">
+              </th>
+              <td class="text-center align-middle">浙B 331UI</td>
+              <td class="text-center align-middle">奥迪</td>
+              <td class="text-center align-middle">A4L</td>
+              <td class="text-center align-middle">轿车</td>
+              <td class="text-center align-middle">300元/天</td>
+              <td class="text-center align-middle">2.0T</td>
+              <td class="text-center align-middle">3</td>
+              <td class="text-center align-middle">5</td>
+              <td class="text-center align-middle">123456789</td>
+              <td class="text-center align-middle">987654321</td>
+              <td class="text-center align-middle">2020年1月1日</td>
+              <td class="text-center align-middle">已租出</td>
+              <td class="text-center align-middle">
+                  <button onclick="" type="button" class="btn btn-outline-secondary">修改</button>
+                  <button onclick="" type="button" class="btn btn-outline-danger">禁用</button>
+                  <button onclick="" type="button" class="btn btn-outline-success">启用</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<!-- 按钮：用于打开模态框 -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    新增车辆
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">新增车辆</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="" action="" method="POST" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="row">
+
+                        
+                        <div class="col-6">
+                            <label for="carPicture"><i>*</i>车辆照片</label>
+                            <input type="file" class="form-control"
+                                id="carPicture" name="carPicture">
+                        </div>
+
+                        <div class="col-6">
+                            <label for="licensePlateNumber"><i>*</i>车牌号</label>
+                            <input type="text" class="form-control"
+                                id="licensePlateNumber" name="licensePlateNumber">
+                        </div>
+
+                        <div class="col-6">
+                            <label for="brand"><i>*</i>品牌</label>
+                            <input type="text" class="form-control"
+                                id="brand" name="brand">
+                        </div>
+
+                        <div class="col-6">
+                            <label for="brandNumber"><i>*</i>型号</label>
+                            <input type="text" class="form-control"
+                                id="brandNumber" name="brandNumber">
+                        </div>
+                                                
+
+                        
+                                                
+                        <div class="col-6">
+                            <label for="rentalPrice"><i>*</i>租赁价格</label>
+                            <input type="text" class="form-control"
+                                id="rentalPrice" name="rentalPrice">
+                        </div>
+                                                
+                        <div class="col-6">
+                            <label for="displacement"><i>*</i>排量</label>
+                            <input type="text" class="form-control"
+                                id="displacement" name="displacement">
+                        </div>
+                                                
+                        <div class="col-6">
+                            <label for="cars"><i>*</i>厢数</label>
+                            <input type="text" class="form-control"
+                                id="cars" name="cars">
+                        </div>
+                                                                        
+                        <div class="col-6">
+                            <label for="seats"><i>*</i>座数</label>
+                            <input type="text" class="form-control"
+                                id="seats" name="seats">
+                        </div>
+                                                                        
+                        <div class="col-6">
+                            <label for="engineNumber"><i>*</i>发动机号</label>
+                            <input type="text" class="form-control"
+                                id="engineNumber" name="engineNumber">
+                        </div>
+                                                                        
+                        <div class="col-6">
+                            <label for="frameNumber"><i>*</i>车架号</label>
+                            <input type="text" class="form-control"
+                                id="frameNumber" name="frameNumber">
+                        </div>
+                                                                                                
+                        <div class="col-6">
+                            <label for="purchaseDate"><i>*</i>购入日期</label>
+                            <input type="date" class="form-control"
+                                id="purchaseDate" name="purchaseDate">
+                        </div>
+                                                                        
+                        <div class="col-6 mt-3">
+                            <p class="d-inline"><i>*</i>车辆状态：</p>
+                                <input class="form-check-input" type="radio" name="status" id="avaliable" required>
+                                <label class="form-check-label" for="avaliable">
+                                在店内
+                                </label>
+                                <input class="form-check-input" type="radio" name="status" id="rentaled">
+                                <label class="form-check-label" for="rentaled">
+                                已租出
+                                </label>
+                                <input class="form-check-input" type="radio" name="status" id="maintain">
+                                <label class="form-check-label" for="maintain">
+                                维修中
+                                </label>
+                                <!-- <input class="form-check-input" type="radio" name="status" id="maintain"> -->
+                                <!-- <label class="form-check-label text-danger" for="maintain">
+                                报废
+                                </label> -->
+                                <br>
+                                <p class="d-inline"><i>*</i>汽车类型：</p>
+                                <input class="form-check-input" type="radio" name="carType" id="offRoad" required>
+                                <label class="form-check-label" for="offRoad">
+                                越野车
+                                </label>
+                                <input class="form-check-input" type="radio" name="carType" id="normalCar">
+                                <label class="form-check-label" for="normalCar">
+                                小轿车
+                                </label>
+                                <input class="form-check-input" type="radio" name="carType" id="sportCar">
+                                <label class="form-check-label" for="sportCar">
+                                跑车
+                                </label>
+                                <input class="form-check-input" type="radio" name="carType" id="superCar">
+                                <label class="form-check-label" for="superCar">
+                                超级跑车
+                                </label>
+                                <!-- <input class="form-check-input" type="radio" name="status" id="maintain"> -->
+                                <!-- <label class="form-check-label text-danger" for="maintain">
+                                报废
+                                </label> -->
+                        </div>
+                    </div>
+                </div>
+            
+                
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+          <button type="submit" class="btn btn-success">提交</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+      </main>
+  </div>
+</div>
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+      <!-- <script src="./js/userIndex.js"></script> -->
+      <!-- 三级联动 begin -->
+    <script type="text/javascript" src="/js/address.js"></script>
+    <script >
+
+        $(function () {
+            var html = "";
+            $("#input_city").append(html);
+            $("#input_area").append(html);
+            $.each(pdata,function(idx,item){
+                if (parseInt(item.level) == 0) {
+                    html += "<option value="+item.code+" >"+ item.names +"</option> ";
+                }
+            });
+            $("#input_province").append(html);
+
+            $("#input_province").change(function(){
+                if ($(this).val() == "") return;
+                $("#input_city option").remove();
+                $("#input_area option").remove();
+                //var code = $(this).find("option:selected").attr("exid");
+                var code = $(this).find("option:selected").val();
+                code = code.substring(0,2);
+                var html = "<option value=''>--请选择--</option>";
+                $("#input_area option").append(html);
+                $.each(pdata,function(idx,item){
+                    if (parseInt(item.level) == 1 && code == item.code.substring(0,2)) {
+                        html +="<option value="+item.code+" >"+ item.names +"</option> ";
+                    }
+                });
+                $("#input_city ").append(html);
+            });
+
+            $("#input_city").change(function(){
+                if ($(this).val() == "") return;
+                $("#input_area option").remove();
+                var code = $(this).find("option:selected").val();
+                code = code.substring(0,4);
+                var html = "<option value=''>--请选择--</option>";
+                $.each(pdata,function(idx,item){
+                    if (parseInt(item.level) == 2 && code == item.code.substring(0,4)) {
+                        html +="<option value="+item.code+" >"+ item.names +"</option> ";
+                    }
+                });
+                $("#input_area ").append(html);
+            });
+        });
+    </script>
+    <!-- 三级联动 end -->
+  </body>
+</html>

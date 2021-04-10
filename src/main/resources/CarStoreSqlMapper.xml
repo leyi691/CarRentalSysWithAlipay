@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nbut.jerry.mapper.CarStoreSqlMapper">
+    <select id="selectAll" resultType="CarStore">
+        SELECT * from carStoreTable order by storeId desc
+    </select>
+    <select id="selectCarStoreById" parameterType="int" resultType="CarStore">
+        SELECT * from carStoreTable where storeId=#{_parameter}
+    </select>
+    <select id="selectCarStoreByIdForUser" parameterType="int" resultType="CarStore">
+        SELECT storeName, storeAddress, storeArea, storeContactNumber from carStoreTable where storeId=#{_parameter}
+    </select>
+    <select id="selectCarStoreByUserName" parameterType="string" resultType="CarStore">
+        SELECT * FROM carStoreTable where storeAdminUsername=#{_parameter}
+    </select>
+    <select id="selectCarStoreByUsernameForCheck" parameterType="CarStore" resultType="int">
+        SELECT COUNT(*) FROM carStoreTable where storeAdminUsername=#{storeAdminUsername} AND storePassword=#{storePassword}
+    </select>
+    <select id="searchCarStoreLikeCarStoreNameForSysAdmin" parameterType="string" resultType="CarStore">
+        SELECT * FROM carStoreTable WHERE storeName LIKE #{_parameter}
+    </select>
+    <!--    查看该商店下是否有还在租赁中的车辆-->
+    <select id="selectCarIsInRental" resultType="int" parameterType="int">
+        SELECT COUNT(*) from carTable where storeId=#{_parameter} AND carStatus='已租出'
+    </select>
+    <insert id="insertCarStoreById" parameterType="CarStore">
+    insert into carStoreTable(storeAdminUsername,storePassword,storeName,storeContactNumber,storeArea,storeAddress,storeStatus,storeImagePath1,storeImagePath2,storeImagePath3)
+    values(#{storeAdminUsername},#{storePassword},#{storeName},#{storeContactNumber},#{storeArea},#{storeAddress},#{storeStatus},#{storeImagePath1},#{storeImagePath2},#{storeImagePath3})
+    </insert>
+    <update id="updateCarStoreById" parameterType="CarStore">
+    update carStoreTable set storePassword=#{storePassword},
+    storeName=#{storeName}, storeContactNumber=#{storeContactNumber}, storeArea=#{storeArea},
+    storeAddress=#{storeAddress}, storeImagePath1=#{storeImagePath1},
+    storeImagePath2=#{storeImagePath2},storeImagePath3=#{storeImagePath3},
+    storeStatus=#{storeStatus} where storeId = #{storeId}
+    </update>
+    <update id="updateCarStoreByIdWithoutPassword" parameterType="CarStore">
+    update carStoreTable set storeName=#{storeName},
+    storeContactNumber=#{storeContactNumber}, storeArea=#{storeArea},
+    storeAddress=#{storeAddress},storeStatus=#{storeStatus}
+    where storeId=#{storeId}
+    </update>
+    <update id="updateCarStoreByUserName" parameterType="CarStore">
+    update carStoreTable set storePassword=#{storePassword},storeName=#{storeName},
+    storeContactNumber=#{storeContactNumber},storeArea=#{storeArea},
+    storeAddress=#{storeAddress}, storeImagePath1=#{storeImagePath1},
+    storeImagePath2=#{storeImagePath2},storeImagePath3=#{storeImagePath3},
+    storeStatus=#{storeStatus} where storeAdminUsername = #{storeAdminUsername}
+    </update>
+    <update id="updateCarStoreByUserNameWithoutPassword" parameterType="CarStore">
+    UPDATE carStoreTable SET storeName=#{storeName},
+    storeContactNumber=#{storeContactNumber},storeArea=#{storeArea},
+    storeAddress=#{storeAddress}, storeImagePath1=#{storeImagePath1},
+    storeImagePath2=#{storeImagePath2},storeImagePath3=#{storeImagePath3},
+    storeStatus=#{storeStatus} WHERE storeAdminUsername=#{storeAdminUsername}
+    </update>
+    <delete id="deleteCarStoreById" parameterType="int">
+    DELETE from carStoreTable where storeId=#{_parameter}
+    </delete>
+    <delete id="deleteCarStoreByUsername" parameterType="string">
+    DELETE from carStoreTable where storeAdminUsername=#{_parameter}
+    </delete>
+
+</mapper>

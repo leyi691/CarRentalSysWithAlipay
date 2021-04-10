@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nbut.jerry.mapper.OrderSqlMapper">
+    <select id="selectAll" resultType="Order">
+    select * from orderTable order by orderId desc
+    </select>
+    <select id="selectOrderById" parameterType="int" resultType="Order">
+    select * from orderTable where orderId=#{_parameter}
+    </select>
+<!--    按照商铺查询所有订单   -->
+    <select id="selectOrderByStoreId" parameterType="int" resultType="Order">
+    select * from orderTable where storeId=#{_parameter} order by orderId desc
+    </select>
+<!--
+        按照用户Id 查询所有订单，用户只能查出以下的数据：
+        o.orderId, o.totalAmount, o.rentalDate, o.rentalDate, o.orderStatus,
+        c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement,
+        s.storeName, x.storeName
+-->
+<!--    按照用户编号查询订单(仅用户)  -->
+    <select id="selectOrderByUserId" parameterType="int" resultType="Order">
+    SELECT o.*,
+           c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement,
+           s.storeName, x.storeName, s.storeContactNumber
+    FROM orderTable o, carTable c, carStoreTable s, carStoreTable x
+    WHERE o.carId = c.carId AND o.storeId = s.storeId AND x.storeId = o.returnCarStoreId AND o.userId=#{_parameter}
+    ORDER BY o.orderId DESC
+    </select>
+<!--    按照商户唯一订单编号查询订单(仅用户)  -->
+    <select id="selectOrderByOutTradeNoForUser" parameterType="string" resultType="Order">
+    SELECT o.*,
+           c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement, c.carPicture,
+           s.storeName, x.storeName AS returnStoreName, s.storeContactNumber
+    FROM orderTable o, carTable c, carStoreTable s, carStoreTable x
+    WHERE o.carId = c.carId AND o.storeId = s.storeId AND x.storeId = o.returnCarStoreId AND outTradeNo=#{_parameter}
+    ORDER BY o.orderId DESC
+    </select>
+<!--    按照用户Id模糊查询订单(仅用户)  -->
+    <select id="searchOrderLikeStoreNameForUser" parameterType="Map" resultType="Order">
+    SELECT o.*,
+           c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement, c.carPicture,
+           s.storeName, x.storeName, s.storeContactNumber
+    FROM orderTable o, carTable c, carStoreTable s, carStoreTable x
+    WHERE o.carId = c.carId AND o.storeId = s.storeId AND x.storeId = o.returnCarStoreId AND s.storeName LIKE #{searchTxt} AND o.userId=#{userId}
+    ORDER BY o.orderId DESC
+    </select>
+    <!--    按照按车辆品牌模糊查询订单(仅商户)  -->
+    <select id="searchOrderLikeBrandForCarStore" parameterType="Map" resultType="Order">
+    SELECT o.*,
+           c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement, c.carPicture, c.licensePlateNumber,
+           s.storeName, x.storeName, s.storeContactNumber,
+           u.username, u.nickname
+    FROM orderTable o, carTable c, carStoreTable s, carStoreTable x, userTable u
+    WHERE o.carId = c.carId AND o.storeId = s.storeId AND u.userId = o.userId AND x.storeId = o.returnCarStoreId AND c.brand LIKE #{searchTxt} AND s.storeId=#{storeId}
+    ORDER BY o.orderId DESC
+    </select>
+    <!--    按照按订单状态模糊查询订单(仅商户)  -->
+    <select id="searchOrderLikeStatueForCarStore" parameterType="Map" resultType="Order">
+    SELECT o.*,
+           c.brand, c.brandNumber, c.rentalPrice, c.carType, c.displacement, c.carPicture, c.licensePlateNumber,
+           s.storeName, x.storeName, s.storeContactNumber,
+           u.username, u.nickname
+    FROM orderTable o, carTable c, carStoreTable s, carStoreTable x, userTable u
+    WHERE o.carId = c.carId AND o.storeId = s.storeId AND u.userId = o.userId AND x.storeId = o.returnCarStoreId AND o.orderStatus LIKE #{searchTxt} AND s.storeId=#{storeId}
+    ORDER BY o.orderId DESC
+    </select>
+    <!--  查询所有订单(仅商户)  -->
+    <select id="selectAllOrderForCarStore" parameterType="int" resultType="Order">
+    SELECT c.carPicture, c.licensePlateNumber, c.brand, c.brandNumber, c.rentalPrice,
+           o.*,
+           u.username, u.nickname
+    FROM orderTable o, carTable c, carStoreTable s, userTable u
+    WHERE c.carId = o.carId AND c.storeId = s.storeId AND u.userId = o.userId AND s.storeId=#{_parameter}
+    ORDER BY o.orderId DESC
+    </select>
+<!--    &lt;!&ndash;  查询所有待取车订单  &ndash;&gt;-->
+<!--    <select id="selectWaitForDispatchOrder" parameterType="int" resultType="Order">-->
+<!--    SELECT o.orderId, c.carPicture, c.licensePlateNumber, c.brand, c.brandNumber, c.rentalPrice,-->
+<!--           o.totalAmount, o.rentalDate, o.returnDate, o.orderStatus-->
+<!--    FROM orderTable o, carTable c, carStoreTable s-->
+<!--    WHERE c.carId = o.carId AND c.storeId = s.storeId AND s.storeId=#{_parameter}-->
+<!--    ORDER BY s.storeId DESC-->
+<!--    </select>-->
+<!--    查询订单状态为未支付且超时的订单   -->
+    <select id="selectAllTimoutOrder" parameterType="string" resultType="Order">
+    SELECT * FROM orderTable WHERE orderDate=#{_parameter} AND orderStatus='待支付'
+    </select>
+    <insert id="insertOrderById" parameterType="Order">
+    insert into orderTable(outTradeNo,carId,storeId,returnCarStoreId,orderSubject,totalAmount,orderInfo,orderDate,rentalDate,returnDate,orderStatus,remark,userId)
+    values(#{outTradeNo},#{carId},#{storeId},#{returnCarStoreId},#{orderSubject},#{totalAmount},#{orderInfo},#{orderDate},#{rentalDate},#{returnDate},#{orderStatus},#{remark},#{userId})
+    </insert>
+    <update id="updateOrderStatusByOutTradeNo" parameterType="Order">
+    update orderTable set orderStatus=#{orderStatus} where outTradeNo=#{outTradeNo}
+    </update>
+    <update id="updateOrderRemarkByOutTradeNo" parameterType="Order">
+    update orderTable set remark=#{remark} where outTradeNo=#{outTradeNo}
+    </update>
+    <delete id="deleteOrderById" parameterType="int">
+    DELETE from orderTable where carId=#{_parameter}
+    </delete>
+</mapper>
