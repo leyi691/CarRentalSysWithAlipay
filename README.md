@@ -8,6 +8,9 @@ database文件夹为我使用到的数据表及其链接，已经全部包含在
 
 # 部署操作指南
 
+可参加我的博客：
+https://blog.csdn.net/weixin_45827203/article/details/117367678
+
 # 1. 前提环境
 
 |  名称  |     版本      |
